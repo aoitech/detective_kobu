@@ -22,6 +22,7 @@ start() {
 _mainLoop() {
   // getContextはキャンパスに描画するためのオブジェクト(コンテキスト)を取得するメソッド
   // 2dは2次元グラフィックのコンテキストを取得
+  // コンテキストはcanvasに絵を描く画家のイメージ
   const ctx = this.canvas.getContext('2d')
   // fillStyleはcanvasで図形の内側を塗りつぶすために色などを指定できる
   ctx.fillStyle = '#000000';

@@ -22,4 +22,12 @@ class Sprite {
     // スプライトを表示するプログラムをかいている。
     this.render(canvas);
   }
+
+  render(canvas) {
+    //画家さん（コンテキスト）を呼ぶ
+    const _ctx = canvas.getContext('2d');
+    //画家さんに、絵を描いてとお願いする
+    // drawImageは使用範囲を指定してイメージを描画する
+    _ctx.drawImage(this.img,this.x,this.y);
+  }
 }
