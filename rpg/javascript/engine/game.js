@@ -16,11 +16,58 @@ class Game {
 
     //ゲームに登場する全てのもの（オブジェクト）を入れるための配列
     this.objs = [];
+
+    //ゲームに使用するキーと、そのキーが押されているかどうかを入れるためのハッシュ
+		//例 { up: false, down: false }
+    this.input = {};
+    //登録されたキーに割り当てられたプロパティ名と、キー名を関連づけるためのハッシュ
+		//例 { up: "ArrowUp", down: "ArrowDown" }
+    this._keys = {};
   }
 
 // startメソッドを呼び出してメインループ開始
 start() {
+  //デフォルトのキーバインドを登録する（使いたいキーを登録する）
+  // 上下左右の方向キーをデフォルトで登録。22行目で初期化したthis.input = {};が記憶する
+  this.keybind('up','ArrowUp')
+  this.keybind('down', 'ArrowDown');
+  this.keybind('right', 'ArrowRight');
+  this.keybind('left', 'ArrowLeft');
+
   this._mainLoop();
+  //イベントリスナーをセットする
+  this._setEventListener();
+}
+
+_setEventListener() {
+  //なにかキーが押されたときと、はなされたときに呼ばれる
+  const _keyEvent = e => {
+    e.preventDefault();
+    //_keysに登録された数だけ繰り返す
+    for (let key in this._keys) {
+      //イベントのタイプによって呼び出すメソッドを変える
+      // switchはほぼif文と同義
+      switch(e.type) {
+        case 'keydown' :
+          //押されたキーが、登録されたキーの中に存在するとき、inputのそのキーをtrueにする
+          if (e.key === this._keys[key]) this.input[key] = true;
+          break;
+        case 'keyup' :
+          //押されたキーが、登録されたキーの中に存在するとき、inputのそのキーをfalseにする
+          if(e.key === this._keys[key]) this.input[key] = false;
+          break;
+      }
+    }
+  }
+  // スクロールする時、登録されたすべてのイベントの中にpreventdefault();がないかを確認するまで、JSが止まる。
+  // →遅延が発生し、スクロール時のパフォーマンスが下がる。これがスクロールジャンク。
+  // passiveという引数をtrueにすることで、「リスナーで登録されたpreventDefault();は一切実行しない」という宣言ができる
+  // 今回はpreventDefault使うのでfalseにする。
+
+  //なにかキーが押されたとき
+  addEventListener('keydown', _keyEvent, { passive: false})
+  //キーがはなされたとき
+  addEventListener('keyup', _keyEvent, { passive: false });
 }
 
 // _から始まるのはprivateの意。
@@ -52,5 +99,19 @@ _mainLoop() {
 add(obj) {
   this.objs.push(obj);
 }
+
+
+	//  使いたいキーを登録できるようになる、keybindメソッドを作成
+	//  引数
+	//   * name : キーにつける名前
+	//   * key : キーコード
+	 
+  keybind(name,key) {
+    //キーの名前と、キーコードを関連づける
+    this._keys[name] = key;
+    //キーが押されているかどうかを入れておく変数に、まずはfalseを代入しておく
+    this.input[name] = false;
+    
+  }
 
 }
