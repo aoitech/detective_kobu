@@ -19,6 +19,9 @@ addEventListener('load',() => {
 		[11,11,11,11,11,11,11,11,11,11]
 	];
 
+  //タイルのサイズ
+  const TILE_SIZE = 32;
+
   //キャラクターの歩く速さ
   const WALKING_SPEED = 4;
 
@@ -29,11 +32,17 @@ addEventListener('load',() => {
   const tilemap = new Tilemap('img/tile.png');
   //tilemap.dataに、どんなマップなのか教える
   tilemap.data = map;
+  //マップ全体の位置をずらす
+  tilemap.x = TILE_SIZE * 4 - TILE_SIZE / 2;
+  tilemap.y = TILE_SIZE * 3 - TILE_SIZE / 2;
+
   //マップを登録する
   scene.add(tilemap);
 
   //定数yamadaに、あなたは山田先生のスプライト画像ですよ、と教える
 	const yamada = new Tile('img/yamada.png');
+  //山田先生を画面の中央に配置
+  yamada.x = yamada.y = TILE_SIZE * 5 - TILE_SIZE / 2;
 
   //sceneに、山田先生のタイルを追加して、とお願いする
   tilemap.add(yamada);
