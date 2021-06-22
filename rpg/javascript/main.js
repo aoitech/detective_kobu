@@ -36,7 +36,7 @@ addEventListener('load',() => {
 	const yamada = new Tile('img/yamada.png');
 
   //sceneに、山田先生のタイルを追加して、とお願いする
-  scene.add(yamada);
+  tilemap.add(yamada);
 
   //ループから常に呼び出される
   //変数yamadaはスプライトだから、スプライトクラスのメソッドを使える。

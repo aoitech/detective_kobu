@@ -17,15 +17,15 @@ class Tilemap {
 		this.data = [];
     //タイルマップに重ねるように置きたいタイルを追加できる
     //タイルマップに重ねて配置したいタイルを入れておくための空の配列を、準備
-    this.titles = [];
+    this.tiles = [];
   }
 
   // タイルマップの上にタイルを重ねるように追加できるメソッド
   // 引数
 	//  * tile : 追加したいタイル
-  add(title) {
+  add(tile) {
     //引数がTileのとき、this.tilesの末尾にtileを追加
-    if(title instanceof Title) this.tiles.push(tile);
+    if(tile instanceof Tile) this.tiles.push(tile);
     //引数がTileでなければ、コンソールにエラーを表示
     else 
       console.error('Tilemapに追加できるのはTileだけだよ💪( ˙꒳˙💪)')
