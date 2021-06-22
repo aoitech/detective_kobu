@@ -56,7 +56,7 @@ class Tilemap {
         const _ctx = canvas.getContext('2d');
 
         //タイルを表示
-        _ctx.drawImg (
+        _ctx.drawImage (
           this.img,
 					this.size * _frameX,
 					this.size * _frameY,
