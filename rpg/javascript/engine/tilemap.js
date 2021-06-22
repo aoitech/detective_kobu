@@ -15,7 +15,23 @@ class Tilemap {
 		this.size = size || 32;
 		//二次元配列で数値を入力すると、マップをつくることができる
 		this.data = [];
+    //タイルマップに重ねるように置きたいタイルを追加できる
+    //タイルマップに重ねて配置したいタイルを入れておくための空の配列を、準備
+    this.titles = [];
   }
+
+  // タイルマップの上にタイルを重ねるように追加できるメソッド
+  // 引数
+	//  * tile : 追加したいタイル
+  add(title) {
+    //引数がTileのとき、this.tilesの末尾にtileを追加
+    if(title instanceof Title) this.tiles.push(tile);
+    //引数がTileでなければ、コンソールにエラーを表示
+    else 
+      console.error('Tilemapに追加できるのはTileだけだよ💪( ˙꒳˙💪)')
+  }
+
+
   //Gameクラスのメインループからずっと呼び出され続ける
   // 引数
 	//  * canvas : 紙（キャンバス）
@@ -24,6 +40,13 @@ class Tilemap {
     this.render(canvas);
     //常に呼び出される、オーバーライド用のメソッドを呼び出す
     this.onenterframe();
+
+    //タイルの数だけ繰り返す
+    for(let i = 0; i < this.tiles.length; i++) {
+      //それぞれのタイルのupdateメソッドを呼び出す
+      // 追加したタイルを重ねて表示できる
+      this.tiles[i].update(canvas);
+    }
   }
 
   // Gameクラスのメインループからずっと呼び出され続ける。画像を表示したりするためのメソッド
