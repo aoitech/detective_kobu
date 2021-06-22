@@ -89,6 +89,10 @@ _mainLoop() {
   //塗りつぶしの四角形を描く際に使用。左上から、画面のサイズまでを、塗りつぶす。
   ctx.fillRect( 0,0,this.canvas.width,this.canvas.height );
 
+  //現在のシーンのupdateメソッドを呼び出す
+  //sceneのonenterframeメソッドが使える
+  this.currentScene.update();
+
   //現在のシーンの、ゲームに登場する全てのオブジェクトの数だけ繰り返す
   // 第一引数はカウンター変数を初期化するため、第二引数はループの処理前に評価され、trueならfor内が実行される
   // 第三引数はループ後に変数を1ずつ増加
