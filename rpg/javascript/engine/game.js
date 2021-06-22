@@ -28,6 +28,7 @@ class Game {
 // startメソッドを呼び出してメインループ開始
 start() {
   //デフォルトのキーバインドを登録する（使いたいキーを登録する）
+  // 上下左右の方向キーをデフォルトで登録。22行目で初期化したthis.input = {};が記憶する
   this.keybind('up','ArrowUp')
   this.keybind('down', 'ArrowDown');
   this.keybind('right', 'ArrowRight');
@@ -98,5 +99,19 @@ _mainLoop() {
 add(obj) {
   this.objs.push(obj);
 }
+
+
+	//  使いたいキーを登録できるようになる、keybindメソッドを作成
+	//  引数
+	//   * name : キーにつける名前
+	//   * key : キーコード
+	 
+  keybind(name,key) {
+    //キーの名前と、キーコードを関連づける
+    this._keys[name] = key;
+    //キーが押されているかどうかを入れておく変数に、まずはfalseを代入しておく
+    this.input[name] = false;
+    
+  }
 
 }
