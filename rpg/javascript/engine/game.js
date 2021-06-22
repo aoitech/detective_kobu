@@ -15,7 +15,12 @@ class Game {
     this.canvas.height = height || 320;
 
     //ゲームに登場する全てのもの（オブジェクト）を入れるための配列
-    this.objs = [];
+    // this.objs = [];
+
+    //シーンを入れておくための配列
+    this.scenes = [];
+    //現在のシーンをいれておくためのもの
+    this.currentScene;
 
     //ゲームに使用するキーと、そのキーが押されているかどうかを入れるためのハッシュ
 		//例 { up: false, down: false }
@@ -33,6 +38,9 @@ start() {
   this.keybind('down', 'ArrowDown');
   this.keybind('right', 'ArrowRight');
   this.keybind('left', 'ArrowLeft');
+
+  //currentSceneになにも入っていないときは、scenes[0]を代入
+  this.currentScene = this.currentScene || this.scenes[0];
 
   this._mainLoop();
   //イベントリスナーをセットする
@@ -81,23 +89,28 @@ _mainLoop() {
   //塗りつぶしの四角形を描く際に使用。左上から、画面のサイズまでを、塗りつぶす。
   ctx.fillRect( 0,0,this.canvas.width,this.canvas.height );
 
-  //ゲームに登場する全てのもの（オブジェクト）の数だけ繰り返す
+  //現在のシーンの、ゲームに登場する全てのオブジェクトの数だけ繰り返す
   // 第一引数はカウンター変数を初期化するため、第二引数はループの処理前に評価され、trueならfor内が実行される
   // 第三引数はループ後に変数を1ずつ増加
-  for ( let i = 0; i<this.objs.length; i++) {
-    //スプライトやテキストなど、すべてのオブジェクトのupdateメソッドを呼び出す
+  for(let i = 0; i<this.currentScene.objs.length; i++) {
+    //現在のシーンの、すべてのオブジェクトのupdateメソッドを呼び出す
     // this.objs[i].updateでsprite.jsのSpriteクラスのupdateメソッドを呼び出している
-    this.objs[i].update(this.canvas);
+    this.currentScene.objs[i].update(this.canvas);
   }
 
   // bindは引数にthisを指定して振る舞いを変える事ができる
+  //自分自身（_mainLoop）を呼び出して、ループさせる
   requestAnimationFrame(this._mainLoop.bind(this));
 }
 
 // オブジェクトをゲームに追加できるようになる、addメソッドを作成
-// 引数obj : 追加したいオブジェクト
-add(obj) {
-  this.objs.push(obj);
+// 引数scene : 追加したいシーン
+add(scene) {
+  // instanceofはオブジェクトが特定のクラスに属しているかを判定するメソッド
+  //引数がSceneクラスに属しているとき、this.scenesの末尾にsceneを追加
+  if (scene instanceof Scene) this.scenes.push(scene);
+  //引数がSceneでなければ、コンソールにエラーを表示
+  else console.error( 'Gameに追加できるのはSceneだけだよ💪( ˙꒳˙💪)' );
 }
 
 
