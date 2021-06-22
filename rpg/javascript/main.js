@@ -9,6 +9,9 @@ addEventListener('load',() => {
   //変数yamadaに、あなたは山田先生のスプライト画像ですよ、と教える
 	const yamada = new Sprite( 'img/yamada.png' );
 
+//常に呼び出される
+// 変数yamadaはスプライトだから、スプライトクラスのメソッドを使える。
+// スプライトクラスで何も書かれていなかったonenterframをここでオーバーライドする。
 yamada.onenterframe = () => {
   //キーが押されたとき、山田先生が移動する
   if(game.input.left)yamada.x -= WALKING_SPEED;
