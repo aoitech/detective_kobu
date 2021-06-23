@@ -24,6 +24,9 @@ class Sprite {
 		//12個の画像があった場合に何番目の画像を表示するか。
     //frameはスプライトに設定されているフレームを示す
 		this.frame = 0;
+    //数値によってスプライトを移動させることができる（移動速度）
+    // ここでしていることは移動速度のプロパティの初期化
+    this.vx = this.vy = 0;
   }
 
 
@@ -36,6 +39,10 @@ class Sprite {
     this.render(canvas);
     //スプライトを動かしたり、なにかのきっかけでイベントを発生させたりするために使うメソッドを呼び出す
     this.onenterframe();
+    //スプライトを移動する
+    // スプライトの座標に移動速度を足す
+    this.x += this.vx;
+    this.y += this.vy;
   }
 
   render(canvas) {
