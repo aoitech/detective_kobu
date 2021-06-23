@@ -51,11 +51,14 @@ addEventListener('load',() => {
   //変数yamadaはスプライトだから、スプライトクラスのメソッドを使える。
   //スプライトクラスで何も書かれていなかったonenterframをここでオーバーライドする。
   scene.onenterframe = () => {
-    //キーが押されたとき、タイルマップが動くように
-    if(game.input.left) tilemap.x -= WALKING_SPEED;
-    if (game.input.right) tilemap.x += WALKING_SPEED;
-    if (game.input.up) tilemap.y -= WALKING_SPEED;
-    if (game.input.down) tilemap.y += WALKING_SPEED;
+    //タイルマップの移動速度に0を代入する(ずっと移動するのを防ぐため)
+    // 最初に0を代入→キー入力があった時のみ移動速度を代入する
+		tilemap.vx = tilemap.vy = 0;
+    //キーが押されたとき、山田先生（マップ）が移動する
+    if(game.input.left) tilemap.vx = WALKING_SPEED;
+    if (game.input.right) tilemap.vx = -1 * WALKING_SPEED;
+    if (game.input.up) tilemap.vy = WALKING_SPEED;
+    if (game.input.down) tilemap.vy = -1 * WALKING_SPEED;
   }
   
 
